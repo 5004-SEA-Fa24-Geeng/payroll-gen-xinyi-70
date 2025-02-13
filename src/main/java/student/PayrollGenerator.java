@@ -69,29 +69,25 @@ public final class PayrollGenerator {
         // as it is invalid, but if is 0, you still generate a paystub, but the amount is 0.
 
         //YOUR CODE HERE
+        // Process timecards and generate paystubs
         for (ITimeCard timeCard : timeCardList) {
-            double hoursWorked = timeCard.getHoursWorked();
-
-            // If hours worked is negative, skip this pay stub
-            if (hoursWorked < 0) {
-                continue;
-            }
-
-            // Find the employee that matches the time card based on employee ID
-            IEmployee employee = employees.stream()
-                    .filter(e -> e.getID().equals(timeCard.getEmployeeID()))
+            // Find matching employee by ID
+            IEmployee matchingEmployee = employees.stream()
+                    .filter(emp -> emp.getID().equals(timeCard.getEmployeeID()))
                     .findFirst()
                     .orElse(null);
 
-            if (employee != null) {
-                IPayStub payStub;
-                if (hoursWorked == 0) {
-                    payStub = new PayStub(employee, 0, 0);
-                } else {
-                    payStub = employee.runPayroll(hoursWorked);
+            // Only proceed if we found a matching employee
+            if (matchingEmployee != null) {
+                double hours = timeCard.getHoursWorked();
+
+                // Skip negative hours (directly continue to next timecard)
+                if (hours < 0) {
+                    continue;
                 }
 
-                // Add the valid payStub to the list of pay stubs
+                // Generate paystub for 0 or positive hours
+                IPayStub payStub = matchingEmployee.runPayroll(hours);
                 if (payStub != null) {
                     payStubs.add(payStub);
                 }
