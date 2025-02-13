@@ -48,10 +48,6 @@ public class HourlyEmployee extends AbstractEmployee {
      */
     @Override
     protected double calculateGrossPay(double hoursWorked) {
-        if (hoursWorked < 0) {
-            return 0;
-        }
-
         BigDecimal hourlyRate = new BigDecimal(getPayRate());
 
         if (hoursWorked <= 40) {

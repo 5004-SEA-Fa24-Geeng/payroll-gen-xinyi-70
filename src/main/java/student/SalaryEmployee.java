@@ -49,10 +49,6 @@ public class SalaryEmployee extends AbstractEmployee {
      */
     @Override
     protected double calculateGrossPay(double hoursWorked) {
-        if (hoursWorked < 0) {
-            return 0;
-        }
-        
         return new BigDecimal(getPayRate())
                 .divide(new BigDecimal(PAY_PERIODS), 2, RoundingMode.HALF_UP).doubleValue();
     }
