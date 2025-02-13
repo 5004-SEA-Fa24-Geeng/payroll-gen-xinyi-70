@@ -22,11 +22,34 @@ public final class Builder {
      * @return the employee object
      */
     public static IEmployee buildEmployeeFromCSV(String csv) {
+        String[] parts = csv.split(",");
+        if (parts.length != 7) {
+            throw new IllegalArgumentException("Invalid CSV format");
+        }
 
-        return null;
+        try {
+            String type = parts[0];
+            String name = parts[1];
+            String id = parts[2];
+            double payRate = Double.parseDouble(parts[3]);
+            double pretaxDeductions = Double.parseDouble(parts[4]);
+            double ytdEarnings = Double.parseDouble(parts[5]);
+            double ytdTaxesPaid = Double.parseDouble(parts[6]);
+
+            switch (type) {
+                case "HOURLY":
+                    return new HourlyEmployee(name, id, payRate, ytdEarnings,
+                            ytdTaxesPaid, pretaxDeductions);
+                case "SALARY":
+                    return new SalaryEmployee(name, id, payRate, ytdEarnings,
+                            ytdTaxesPaid, pretaxDeductions);
+                default:
+                    throw new IllegalArgumentException("Unknown employee type: " + type);
+            }
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid number format in CSV", e);
+        }
     }
-
-
 
    /**
      * Converts a TimeCard from a CSV String.
@@ -35,7 +58,17 @@ public final class Builder {
      * @return a TimeCard object
      */
     public static ITimeCard buildTimeCardFromCSV(String csv) {
-    
-        return null;
+        String[] parts = csv.split(",");
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("Invalid CSV format");
+        }
+
+        try {
+            String employeeId = parts[0];
+            double hoursWorked = Double.parseDouble(parts[1]);
+            return new TimeCard(employeeId, hoursWorked);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid number format in CSV", e);
+        }
     }
 }
