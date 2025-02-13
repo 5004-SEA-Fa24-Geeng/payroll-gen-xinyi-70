@@ -17,6 +17,8 @@ Did you use any external resources (you do not have to cite in class material)? 
 * Comma-separated values. https://en.wikipedia.org/wiki/Comma-separated_values
 * Generics in Java. https://www.geeksforgeeks.org/generics-in-java/
 * JUnit 5 - @TempDir. http://geeksforgeeks.org/junit-5-tempdir/
+* Gender pay gap in U.S. hasn’t changed much in two decades. https://www.pewresearch.org/short-reads/2023/03/01/gender-pay-gap-facts/
+* Understanding the gender pay gap: definition and causes. https://www.europarl.europa.eu/topics/en/article/20200109STO69925/understanding-the-gender-pay-gap-definition-and-causes
 
 (Optional) What was your favorite part of the assignment?
 

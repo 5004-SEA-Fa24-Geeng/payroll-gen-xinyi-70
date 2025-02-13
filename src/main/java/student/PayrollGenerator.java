@@ -86,7 +86,6 @@ public final class PayrollGenerator {
 
             // If found matching employee, generate payStub
             if (matchingEmployee != null) {
-                // Generate payStub for 0 or positive hours
                 IPayStub payStub = matchingEmployee.runPayroll(hours);
                 payStubs.add(payStub);
             }

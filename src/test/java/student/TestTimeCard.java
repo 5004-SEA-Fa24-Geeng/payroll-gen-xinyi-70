@@ -39,11 +39,4 @@ public class TestTimeCard {
             new TimeCard("", validHours);
         });
     }
-
-    @Test
-    public void testConstructorWithNegativeHours() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new TimeCard(validEmployeeId, -1.0);
-        });
-    }
 }

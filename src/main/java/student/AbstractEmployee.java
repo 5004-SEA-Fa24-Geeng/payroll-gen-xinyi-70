@@ -159,7 +159,7 @@ public abstract class AbstractEmployee implements IEmployee {
         // Calculate gross pay
         double grossPay = calculateGrossPay(hoursWorked);
 
-        // Calculate taxes and net pay using BigDecimal
+        // Calculate taxes and net pay using BigDecimal to maintain precision
         BigDecimal taxableAmount = new BigDecimal(grossPay).subtract(new BigDecimal(pretaxDeductions));
         BigDecimal taxes = taxableAmount.multiply(new BigDecimal(TAX_RATE))
                 .setScale(2, RoundingMode.HALF_UP);
