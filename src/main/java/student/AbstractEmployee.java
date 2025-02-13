@@ -153,7 +153,7 @@ public abstract class AbstractEmployee implements IEmployee {
     @Override
     public IPayStub runPayroll(double hoursWorked) {
         if (hoursWorked < 0) {
-            throw new IllegalArgumentException("Hours worked cannot be negative");
+            return null;
         }
 
         // Calculate gross pay

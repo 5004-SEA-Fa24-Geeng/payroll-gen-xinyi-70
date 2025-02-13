@@ -80,15 +80,10 @@ public final class PayrollGenerator {
             // If employee found, run payroll and add paystub if valid
             if (matchingEmployee != null) {
                 try {
-                    // Skip time cards with negative hours
-                    if (timeCard.getHoursWorked() >= 0) {
-                        IPayStub payStub = matchingEmployee.runPayroll(timeCard.getHoursWorked());
-                        if (payStub != null) {  // additional null check
-                            payStubs.add(payStub);
-                        }
-                    }
+                    IPayStub payStub = matchingEmployee.runPayroll(timeCard.getHoursWorked());
+                    payStubs.add(payStub);
                 } catch (IllegalArgumentException e) {
-                    // Optional: log skipped time cards
+                    // Skip this time card if hours worked is negative
                     System.out.println("Skipping time card for employee " + timeCard.getEmployeeID()
                             + " due to invalid hours: " + timeCard.getHoursWorked());
                 }
