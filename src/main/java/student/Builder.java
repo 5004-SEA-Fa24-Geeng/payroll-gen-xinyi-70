@@ -66,6 +66,10 @@ public final class Builder {
         try {
             String employeeId = parts[0];
             double hoursWorked = Double.parseDouble(parts[1]);
+            if (hoursWorked < 0) {
+                throw new IllegalArgumentException("Hours worked cannot be negative in CSV: " + csv);
+            }
+
             return new TimeCard(employeeId, hoursWorked);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid number format in CSV", e);
