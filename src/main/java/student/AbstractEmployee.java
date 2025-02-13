@@ -153,7 +153,7 @@ public abstract class AbstractEmployee implements IEmployee {
     @Override
     public IPayStub runPayroll(double hoursWorked) {
         if (hoursWorked < 0) {
-            return new PayStub(this, 0.0, 0.0);
+            return null;
         }
 
         // Calculate gross pay

@@ -69,23 +69,31 @@ public final class PayrollGenerator {
         // as it is invalid, but if is 0, you still generate a paystub, but the amount is 0.
 
         //YOUR CODE HERE
-        // First find matching employee for each timecard and run payroll
         for (ITimeCard timeCard : timeCardList) {
-            // Find the matching employee by ID
-            IEmployee matchingEmployee = employees.stream()
-                    .filter(emp -> emp.getID().equals(timeCard.getEmployeeID()))
+            double hoursWorked = timeCard.getHoursWorked();
+
+            // If hours worked is negative, skip this pay stub
+            if (hoursWorked < 0) {
+                continue;
+            }
+
+            // Find the employee that matches the time card based on employee ID
+            IEmployee employee = employees.stream()
+                    .filter(e -> e.getID().equals(timeCard.getEmployeeID()))
                     .findFirst()
                     .orElse(null);
 
-            // If employee found, run payroll and add paystub if valid
-            if (matchingEmployee != null) {
-                try {
-                    IPayStub payStub = matchingEmployee.runPayroll(timeCard.getHoursWorked());
+            if (employee != null) {
+                IPayStub payStub;
+                if (hoursWorked == 0) {
+                    payStub = new PayStub(employee, 0, 0);
+                } else {
+                    payStub = employee.runPayroll(hoursWorked);
+                }
+
+                // Add the valid payStub to the list of pay stubs
+                if (payStub != null) {
                     payStubs.add(payStub);
-                } catch (IllegalArgumentException e) {
-                    // Skip this time card if hours worked is negative
-                    System.out.println("Skipping time card for employee " + timeCard.getEmployeeID()
-                            + " due to invalid hours: " + timeCard.getHoursWorked());
                 }
             }
         }
