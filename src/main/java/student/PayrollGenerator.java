@@ -81,15 +81,20 @@ public final class PayrollGenerator {
             if (matchingEmployee != null) {
                 double hours = timeCard.getHoursWorked();
 
-                // Skip negative hours (directly continue to next timecard)
+                // According to the comment: if value is negative, skip that payStub
                 if (hours < 0) {
-                    continue;
+                    continue;  // Skip this iteration
                 }
 
-                // Generate paystub for 0 or positive hours
-                IPayStub payStub = matchingEmployee.runPayroll(hours);
-                if (payStub != null) {
-                    payStubs.add(payStub);
+                // Run payroll for 0 or positive hours
+                try {
+                    IPayStub payStub = matchingEmployee.runPayroll(hours);
+                    if (payStub != null) {
+                        payStubs.add(payStub);
+                    }
+                } catch (IllegalArgumentException e) {
+                    // Skip any other invalid cases
+                    continue;
                 }
             }
         }
